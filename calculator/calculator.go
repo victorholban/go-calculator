@@ -20,6 +20,8 @@ func Int32ToBytes (a int32) []byte {
 	return buf.Bytes()
 }
 
-func GetBitOnPosition (bytes []byte, position uint) bool {
-	return true
+func GetBitFromPosition(bytes []byte, position uint) bool {
+	selectedByte := bytes[position/8]
+	mask := byte(1 << (position%8))
+	return (selectedByte & mask) != 0
 }

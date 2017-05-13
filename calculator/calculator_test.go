@@ -16,7 +16,7 @@ func TestAddNumbers(t *testing.T) {
 	for _, entry := range tests {
 		result := Add(entry.a, entry.b)
 		if result != entry.result {
-			t.Error("Add(%d,%d) = %d, want %d", entry.a, entry.b, result, entry.result)
+			t.Errorf("Add(%d,%d) = %d, want %d", entry.a, entry.b, result, entry.result)
 		}
 	}
 }
@@ -34,7 +34,7 @@ func  TestDifference(t *testing.T)  {
 	for _, entry := range tests {
 		result := Difference(entry.a, entry.b)
 		if result != entry.result {
-			t.Error("Difference(%d,%d) = %d, want %d", entry.a, entry.b, result, entry.result)
+			t.Errorf("Difference(%d,%d) = %d, want %d", entry.a, entry.b, result, entry.result)
 		}
 	}
 }
@@ -51,7 +51,7 @@ func TestInt32ToBytes(t *testing.T) {
 		result := Int32ToBytes(test.input)
 		for i, _ := range result {
 			if result[i] != test.result[i] {
-				t.Error("Int32ToBytes(%d)[%d] = %d, want %d", test.input, i, result[i], test.result[i])
+				t.Errorf("Int32ToBytes(%d)[%d] = %d, want %d", test.input, i, result[i], test.result[i])
 			}
 		}
 	}
@@ -67,15 +67,15 @@ func TestGetBitOnPosition(t *testing.T) {
 		{[]byte{0,0,0,0}, 0, false},
 		{[]byte{1,0,0,0}, 0, true},
 		{[]byte{4,0,0,0}, 0, false},
-		{[]byte{4,0,0,0}, 3, true},
-		{[]byte{0,2,0,0}, 9, false},
-		{[]byte{0,2,0,0}, 10, true},
+		{[]byte{4,0,0,0}, 2, true},
+		{[]byte{0,2,0,0}, 8, false},
+		{[]byte{0,2,0,0}, 9, true},
 	}
 
 	for _, test := range tests {
-		result := GetBitOnPosition(test.bytes, test.position)
+		result := GetBitFromPosition(test.bytes, test.position)
 		if result != test.expected {
-			t.Error("GetBitOnPosition([% b], %d) = %b, want %b", test.bytes, test.position, result, test.expected)
+			t.Errorf("GetBitFromPosition([% x], %d) = %b, want %b", test.bytes, test.position, result, test.expected)
 		}
 	}
 }
