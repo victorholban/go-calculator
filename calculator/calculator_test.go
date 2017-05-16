@@ -49,7 +49,7 @@ func TestInt32ToBytes(t *testing.T) {
 
 	for _, test := range tests {
 		result := Int32ToBytes(test.input)
-		for i, _ := range result {
+		for i := range result {
 			if result[i] != test.result[i] {
 				t.Errorf("Int32ToBytes(%d)[%d] = %d, want %d", test.input, i, result[i], test.result[i])
 			}
@@ -75,7 +75,32 @@ func TestGetBitOnPosition(t *testing.T) {
 	for _, test := range tests {
 		result := GetBitFromPosition(test.bytes, test.position)
 		if result != test.expected {
-			t.Errorf("GetBitFromPosition([% x], %d) = %b, want %b", test.bytes, test.position, result, test.expected)
+			t.Errorf("GetBitFromPosition([% x], %d) = %t, want %t", test.bytes, test.position, result, test.expected)
+		}
+	}
+}
+
+func TestAddTwoBits(t *testing.T) {
+	tests := []struct {
+			a bool
+			b bool
+			c bool
+			result bool
+			carry bool
+	}{
+		{false, false, false, false, false},
+		{false, true, false, true, false},
+		{true, true, true, true, true},
+		{true, false, true, false, true},
+	}
+
+	for _, test := range tests {
+		result, carry := AddTwoBits(test.a, test.b, test.c)
+		if result != test.result || carry != test.carry {
+			t.Errorf("\nAddTwoBits(%t, %t, %t) \n return [result: %t, carry: %t] \n wanted [result: %t, carry: %t] \n",
+				test.a, test.b, test.c,
+				result, carry,
+				test.result, test.carry)
 		}
 	}
 }
